@@ -9,12 +9,16 @@ import {
 
 import { Schema as SchematicOptions } from './schema';
 import { Schema as WorkspaceSchematicOption } from '../workspace/schema';
+import { validateProjectName } from '@schematics/angular/utility/validation';
 
 
 export default function(options: SchematicOptions): Rule {
   if (!options.directory) {
     options.directory = options.name;
   }
+
+  validateProjectName(options.directory);
+
   return (host: Tree, context: SchematicContext) => {
 
     const { defaultCollection, tslint, pathMapping, commitlint, prettier, ...angularOptions } = options;

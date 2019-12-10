@@ -1,0 +1,17 @@
+{
+  "extends": ["@schematics/angular"],
+  "schematics": {
+    "ng-new": {
+      "factory": "./ng-new",
+      "schema": "./ng-new/schema.json",
+      "description": "Create an Angular workspace.",
+      "hidden": true
+    },
+    "nz-workspace": {
+      "factory": "./workspace",
+      "schema": "./workspace/schema.json",
+      "description": "Create an Angular workspace.",
+      "hidden": true
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgZorroWorkspace",
+  "title": "Workspace Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the new workspace and initial project."
+    },
+    "prefix": {
+      "type": "string",
+      "description": " The prefix to apply to generated selectors for the initial project."
+    },
+    "tslint": {
+      "type": "boolean",
+      "default": true,
+      "description": "When true, rewrite the tslint.json file"
+    },
+    "pathMapping": {
+      "type": "boolean",
+      "default": true,
+      "description": "When true, set the workspace path mapping in the tsconfig.json file"
+    },
+    "commitlint": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable the commit lint"
+    },
+    "prettier": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable the prettier"
+    },
+    "routing": {
+      "type": "boolean",
+      "description": "When true, generates a routing module for the initial project."
+    }
+  },
+  "required": ["name"]
+}

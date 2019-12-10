@@ -1,0 +1,18 @@
+
+{
+  "compilerOptions": {
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "outDir": "dist/schematics",
+    "sourceMap": true,
+    "inlineSources": true,
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "strict": true,
+    "types": ["node"]
+  },
+  "files": ["src/index.ts"]
+}

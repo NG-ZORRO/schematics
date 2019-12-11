@@ -45,4 +45,5 @@ export interface AngularSchema {
   firebaseProject: string;
   /** The name of the project (internal). */
   clientProject?: string;
+  packageManager: 'npm' | 'pnpm' | 'cnpm' | 'yarn'
 }

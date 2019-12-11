@@ -4,12 +4,20 @@ import {
   Tree,
   chain,
   externalSchematic,
-  schematic
+  schematic,
+  mergeWith,
+  apply,
+  empty
 } from '@angular-devkit/schematics';
 
 import { Schema as SchematicOptions } from './schema';
 import { Schema as WorkspaceSchematicOption } from '../workspace/schema';
 import { validateProjectName } from '@schematics/angular/utility/validation';
+import {
+  NodePackageInstallTask,
+  NodePackageLinkTask,
+  RepositoryInitializerTask
+} from '@angular-devkit/schematics/tasks';
 
 
 export default function(options: SchematicOptions): Rule {
@@ -33,8 +41,47 @@ export default function(options: SchematicOptions): Rule {
     };
 
     return chain([
-      externalSchematic('@schematics/angular', 'ng-new', angularOptions),
-      schematic('nz-workspace', workspaceSchema, { scope: options.directory })
+      mergeWith(
+        apply(empty(), [
+          externalSchematic('@schematics/angular', 'ng-new', {
+            ...angularOptions,
+            skipInstall: true,
+            skipGit: true,
+            linkCli: false
+          }),
+          schematic('nz-workspace', workspaceSchema, { scope: options.directory })
+        ]),
+      ),
+      (host: Tree, context: SchematicContext) => {
+        let packageTask;
+        if (!options.skipGit) {
+          const commit = typeof options.commit == 'object'
+            ? options.commit
+            : (!!options.commit ? {} : false);
+
+          packageTask = context.addTask(
+            new RepositoryInitializerTask(
+              options.directory,
+              commit,
+            )
+          );
+        }
+        if (!options.skipInstall) {
+          packageTask = context.addTask(
+            new NodePackageInstallTask({
+              workingDirectory: options.directory,
+              packageManager: options.packageManager,
+            }),
+            packageTask ? [packageTask] : []
+          );
+          if (options.linkCli) {
+            context.addTask(
+              new NodePackageLinkTask('@angular/cli', options.directory),
+              [packageTask],
+            );
+          }
+        }
+      }
     ])(host, context);
   };
 }

@@ -15,6 +15,8 @@ import {
 import { Schema as SchematicOptions } from './schema';
 import { strings } from '@angular-devkit/core';
 import { addPackageToPackageJson } from '../utils/package-config';
+import { experimental } from '@angular-devkit/core';
+import { getWorkspace, getWorkspacePath } from '@schematics/angular/utility/config';
 
 function addPackage(host: Tree, context: SchematicContext, options: SchematicOptions) {
   if (options.prettier) {
@@ -45,7 +47,7 @@ function replacePackageJsonScript(host: Tree) {
 
     json.scripts.build = 'ng build --prod';
 
-    host.overwrite('package.json', JSON.stringify(json, null, 2));
+    host.overwrite('package.json', JSON.stringify(json, null, 2) + '\n');
   }
 
   return host;
@@ -76,7 +78,7 @@ function addGitHookToPackageJson(host: Tree, context: SchematicContext, options:
     }
     if (options.tslint) {
       json['lint-staged']['src/**/*.ts'] = [
-        "./node_modules/.bin/tslint --project src/tsconfig.app.json --fix",
+        "./node_modules/.bin/tslint --project tsconfig.app.json --fix",
         "git add"
       ];
     }
@@ -88,7 +90,7 @@ function addGitHookToPackageJson(host: Tree, context: SchematicContext, options:
 
     }
 
-    host.overwrite('package.json', JSON.stringify(json, null, 2));
+    host.overwrite('package.json', JSON.stringify(json, null, 2) + '\n');
   }
 
   return host;
@@ -117,14 +119,11 @@ function setPathMapping(host: Tree, context: SchematicContext, options: Schemati
       "./src/environments/*"
     ];
 
-    host.overwrite('tsconfig.json', JSON.stringify(json, null, 2));
+    host.overwrite('tsconfig.json', JSON.stringify(json, null, 2) + '\n');
   }
 
   return host;
 }
-
-import { experimental } from '@angular-devkit/core';
-import { getWorkspace, getWorkspacePath } from '@schematics/angular/utility/config';
 
 type WorkspaceSchema = experimental.workspace.WorkspaceSchema;
 

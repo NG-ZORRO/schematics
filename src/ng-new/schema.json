@@ -142,32 +142,32 @@
       "type": "boolean",
       "default": true,
       "description": "Use @ng-zorro/schematics as the default collection",
-      "x-prompt": "Do you want to use @ng-zorro/schematics as the default collection?",
+      "x-prompt": "Would you like to use @ng-zorro/schematics as the default collection?",
       "alias": "d"
     },
     "tslint": {
       "type": "boolean",
       "default": true,
       "description": "When true, rewrite the tslint.json file",
-      "x-prompt": "Do you want to rewrite the tslint.json file?"
+      "x-prompt": "Would you like to add stricter TSLint options?"
     },
     "path-mapping": {
       "type": "boolean",
       "default": true,
       "description": "When true, set the workspace path mapping in the tsconfig.json file",
-      "x-prompt": "Do you want to set the workspace path mapping in the tsconfig.json file?"
+      "x-prompt": "Would you like to set the workspace path mapping in the tsconfig.json file?"
     },
     "commitlint": {
       "type": "boolean",
       "default": true,
       "description": "Enable the commit lint",
-      "x-prompt": "Do you want to enable the commit lint?"
+      "x-prompt": "Would you like to enable the commit lint?"
     },
     "prettier": {
       "type": "boolean",
       "default": true,
       "description": "Enable the prettier",
-      "x-prompt": "Do you want to enable the prettier?"
+      "x-prompt": "Would you like to enable the prettier?"
     }
   },
   "required": ["name", "version"]

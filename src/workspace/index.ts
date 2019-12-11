@@ -19,6 +19,8 @@ import { experimental } from '@angular-devkit/core';
 import { getWorkspace, getWorkspacePath } from '@schematics/angular/utility/config';
 
 function addPackage(host: Tree, context: SchematicContext, options: SchematicOptions) {
+  addPackageToPackageJson(host, '@ng-zorro/schematics', '~0.800.0', true);
+
   if (options.prettier) {
     addPackageToPackageJson(host, 'prettier', '^1.19.1', true);
   }

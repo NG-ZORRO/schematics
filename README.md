@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/%40ng-zorro%2Fschematics.svg)](https://badge.fury.io/js/%40ng-zorro%2Fschematics)
+
 # @ng-zorro/schematics
 
 ## Install

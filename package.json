@@ -1,6 +1,6 @@
 {
   "name": "@ng-zorro/schematics",
-  "version": "0.800.1",
+  "version": "0.800.2",
   "description": "Angular Schematics for NG-ZORRO Team",
   "repository": "https://github.com/hsuanxyz/schematics.git",
   "author": "Hsuan Lee <hsuangm@gmail.com>",

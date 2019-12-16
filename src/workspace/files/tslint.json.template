@@ -142,8 +142,7 @@
     "arrow-parens": false,
     "import-blacklist": [
       true,
-      "rxjs/Rx",
-      "ng-zorro-antd"
+      "rxjs/Rx"
     ],
     "max-classes-per-file": false,
     "max-line-length": [

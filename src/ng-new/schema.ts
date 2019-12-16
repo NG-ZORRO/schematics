@@ -5,6 +5,7 @@ export interface Schema extends AngularSchema, WorkspaceSchema {
 }
 
 export interface AngularSchema {
+  minimal?: boolean;
   /** The directory name to create the workspace in. */
   directory: string;
   /** The name of the workspace. */
@@ -21,20 +22,6 @@ export interface AngularSchema {
   newProjectRoot?: string;
   /** The version of the Angular CLI to use. */
   version?: string;
-  /** Specifies if the style will be in the ts file. */
-  inlineStyle?: boolean;
-  /** Specifies if the template will be in the ts file. */
-  inlineTemplate?: boolean;
-  /** Specifies the view encapsulation strategy. */
-  viewEncapsulation?: ('Emulated' | 'Native' | 'None');
-  /** Generates a routing module. */
-  routing?: boolean;
-  /** The prefix to apply to generated selectors. */
-  prefix?: string;
-  /** The file extension to be used for style files. */
-  style?: string;
-  /** Skip creating spec files. */
-  skipTests?: boolean;
   /** Specify serverless provider. */
   provider: ('aws' | 'gcloud' | 'firebase');
   /** Google Analytics tracking code. */

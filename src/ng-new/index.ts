@@ -32,12 +32,12 @@ export default function(options: SchematicOptions): Rule {
     const { defaultCollection, tslint, pathMapping, commitlint, prettier, ...angularOptions } = options;
 
     const workspaceSchema: WorkspaceSchematicOption = {
-      name: options.name,
-      routing: options.routing,
       tslint,
       pathMapping,
       commitlint,
-      prettier
+      prettier,
+      defaultCollection,
+      ...angularOptions
     };
 
     return chain([
@@ -48,6 +48,8 @@ export default function(options: SchematicOptions): Rule {
             skipInstall: true,
             skipGit: true,
             linkCli: false
+          }, {
+            interactive: false
           }),
           schematic('nz-workspace', workspaceSchema, { scope: options.directory })
         ]),

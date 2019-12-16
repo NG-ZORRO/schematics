@@ -13,10 +13,53 @@ import {
 } from '@angular-devkit/schematics';
 
 import { Schema as SchematicOptions } from './schema';
-import { strings } from '@angular-devkit/core';
+import { JsonObject, strings } from '@angular-devkit/core';
 import { addPackageToPackageJson } from '../utils/package-config';
 import { experimental } from '@angular-devkit/core';
 import { getWorkspace, getWorkspacePath } from '@schematics/angular/utility/config';
+import { Style } from '@schematics/angular/ng-new/schema';
+import { WorkspaceProject } from '@angular-devkit/core/src/experimental/workspace/workspace-schema';
+
+function setWorkspaceSchematics(options: SchematicOptions): Rule {
+  const schematics: JsonObject = {};
+  const schematicsName = options.defaultCollection ? '@ng-zorro/schematics' : '@schematics/angular';
+  if (options.inlineTemplate === true
+    || options.inlineStyle === true
+    || options.style !== Style.Css) {
+    const componentSchematicsOptions: JsonObject = {};
+    if (options.inlineTemplate === true) {
+      componentSchematicsOptions.inlineTemplate = true;
+    }
+    if (options.inlineStyle === true) {
+      componentSchematicsOptions.inlineStyle = true;
+    }
+    if (options.style && options.style !== Style.Css) {
+      componentSchematicsOptions.style = options.style;
+    }
+
+    schematics[`${schematicsName}:component`] = componentSchematicsOptions;
+  }
+
+  if (options.skipTests || options.minimal) {
+    ['class', 'component', 'directive', 'guard', 'interceptor', 'module', 'pipe', 'service'].forEach((type) => {
+      if (!(`${schematicsName}:${type}` in schematics)) {
+        schematics[`${schematicsName}:${type}`] = {};
+      }
+      (schematics[`${schematicsName}:${type}`] as JsonObject).skipTests = true;
+    });
+  }
+
+  return (host: Tree) => {
+    return updateWorkspace(host, workspace => {
+      if (workspace.projects[options.name]) {
+        const project = workspace.projects[options.name] as WorkspaceProject;
+        project.schematics = schematics;
+      }
+    })
+  }
+
+  ;
+}
 
 function addPackage(host: Tree, context: SchematicContext, options: SchematicOptions) {
   addPackageToPackageJson(host, '@ng-zorro/schematics', '~0.800.0', true);
@@ -129,20 +172,24 @@ function setPathMapping(host: Tree, context: SchematicContext, options: Schemati
 
 type WorkspaceSchema = experimental.workspace.WorkspaceSchema;
 
-function updateWorkspace(host: Tree, key: keyof WorkspaceSchema, value: any) {
+function updateWorkspace(host: Tree, fun: (workspace: WorkspaceSchema) => void): Tree {
   const workspace = getWorkspace(host);
   const path = getWorkspacePath(host);
-  (workspace[key] as any) = value;
+  fun(workspace);
   host.overwrite(path, JSON.stringify(workspace, null, 2));
+  return host
 }
 
-function setAsDefaultSchematics() {
+function setAsDefaultSchematics(options: SchematicOptions) {
   const cli = {
     defaultCollection: '@ng-zorro/schematics',
   };
   return (host: Tree) => {
-    updateWorkspace(host, 'cli', cli);
-    return host;
+    if (options.defaultCollection) {
+      return updateWorkspace(host, workspace => {
+        workspace.cli = cli;
+      });
+    }
   };
 }
 
@@ -170,6 +217,7 @@ export default function (options: SchematicOptions): Rule {
     (host: Tree, context: SchematicContext) => addPackage(host, context, options),
     (host: Tree, context: SchematicContext) => setPathMapping(host, context, options),
     (host: Tree) => replacePackageJsonScript(host),
-    setAsDefaultSchematics()
+    setAsDefaultSchematics(options),
+    setWorkspaceSchematics(options)
   ]);
 }

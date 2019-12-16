@@ -25,7 +25,8 @@ function setWorkspaceSchematics(options: SchematicOptions): Rule {
   const schematicsName = options.defaultCollection ? '@ng-zorro/schematics' : '@schematics/angular';
   if (options.inlineTemplate === true
     || options.inlineStyle === true
-    || options.style !== Style.Css) {
+    || options.style !== Style.Css
+    || options.changeDetection !== 'Default') {
     const componentSchematicsOptions: JsonObject = {};
     if (options.inlineTemplate === true) {
       componentSchematicsOptions.inlineTemplate = true;
@@ -35,6 +36,9 @@ function setWorkspaceSchematics(options: SchematicOptions): Rule {
     }
     if (options.style && options.style !== Style.Css) {
       componentSchematicsOptions.style = options.style;
+    }
+    if (options.changeDetection && options.changeDetection !== 'Default') {
+      componentSchematicsOptions.changeDetection = options.changeDetection;
     }
 
     schematics[`${schematicsName}:component`] = componentSchematicsOptions;

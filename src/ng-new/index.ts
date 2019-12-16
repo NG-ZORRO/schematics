@@ -29,13 +29,14 @@ export default function(options: SchematicOptions): Rule {
 
   return (host: Tree, context: SchematicContext) => {
 
-    const { defaultCollection, tslint, pathMapping, commitlint, prettier, ...angularOptions } = options;
+    const { defaultCollection, tslint, pathMapping, commitlint, prettier, changeDetection, ...angularOptions } = options;
 
     const workspaceSchema: WorkspaceSchematicOption = {
       tslint,
       pathMapping,
       commitlint,
       prettier,
+      changeDetection,
       defaultCollection,
       ...angularOptions
     };

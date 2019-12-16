@@ -1,6 +1,7 @@
 export interface Schema {
   name: string;
   defaultCollection: boolean;
+  changeDetection?: 'Default' | 'OnPush'
   tslint: boolean;
   pathMapping: boolean;
   commitlint: boolean;

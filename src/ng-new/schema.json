@@ -88,12 +88,6 @@
         "$source": "ng-cli-version"
       }
     },
-    "routing": {
-      "type": "boolean",
-      "description": "When true, generates a routing module for the initial project.",
-      "default": false,
-      "x-prompt": "Would you like to add Angular routing?"
-    },
     "prefix": {
       "type": "string",
       "format": "html-selector",
@@ -101,22 +95,6 @@
       "minLength": 1,
       "default": "app",
       "alias": "p"
-    },
-    "style": {
-      "description": "The file extension or preprocessor to use for style files.",
-      "type": "string",
-      "enum": ["css", "scss", "sass", "less", "styl"],
-      "x-prompt": {
-        "message": "Which stylesheet format would you like to use?",
-        "type": "list",
-        "items": [
-          { "value": "css",  "label": "CSS" },
-          { "value": "scss", "label": "SCSS   [ https://sass-lang.com/documentation/syntax#scss                ]" },
-          { "value": "sass", "label": "Sass   [ https://sass-lang.com/documentation/syntax#the-indented-syntax ]" },
-          { "value": "less", "label": "Less   [ http://lesscss.org                                             ]" },
-          { "value": "styl", "label": "Stylus [ http://stylus-lang.com                                         ]" }
-        ]
-      }
     },
     "skipTests": {
       "description": "When true, does not generate \"spec.ts\" test files for the new project. ",
@@ -174,6 +152,42 @@
       "default": true,
       "description": "Enable the prettier",
       "x-prompt": "Would you like to enable the prettier?"
+    },
+    "routing": {
+      "type": "boolean",
+      "description": "When true, generates a routing module for the initial project.",
+      "default": false,
+      "x-prompt": "Would you like to add Angular routing?"
+    },
+    "changeDetection": {
+      "description": "The change detection strategy to use in the new component.",
+      "enum": ["Default", "OnPush"],
+      "type": "string",
+      "default": "Default",
+      "x-prompt": {
+        "message": "Which one do you want to use as the default change detection strategy?",
+        "type": "list",
+        "items": [
+          { "value": "Default",  "label": "Default" },
+          { "value": "OnPush", "label": "OnPush" }
+        ]
+      }
+    },
+    "style": {
+      "description": "The file extension or preprocessor to use for style files.",
+      "type": "string",
+      "enum": ["css", "scss", "sass", "less", "styl"],
+      "x-prompt": {
+        "message": "Which stylesheet format would you like to use?",
+        "type": "list",
+        "items": [
+          { "value": "css",  "label": "CSS" },
+          { "value": "scss", "label": "SCSS   [ https://sass-lang.com/documentation/syntax#scss                ]" },
+          { "value": "sass", "label": "Sass   [ https://sass-lang.com/documentation/syntax#the-indented-syntax ]" },
+          { "value": "less", "label": "Less   [ http://lesscss.org                                             ]" },
+          { "value": "styl", "label": "Stylus [ http://stylus-lang.com                                         ]" }
+        ]
+      }
     }
   },
   "required": ["name", "version"]

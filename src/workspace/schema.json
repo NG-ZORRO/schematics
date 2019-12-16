@@ -81,6 +81,12 @@
       "default": true,
       "description": "Use @ng-zorro/schematics as the default collection",
       "alias": "d"
+    },
+    "changeDetection": {
+      "description": "The change detection strategy to use in the new component.",
+      "enum": ["Default", "OnPush"],
+      "type": "string",
+      "default": "Default"
     }
   },
   "required": ["name"]

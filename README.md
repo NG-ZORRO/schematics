@@ -18,7 +18,7 @@ ng new -c @ng-zorro/schematics [app-name]
 ✅️ Would you like to set the workspace path mapping in the tsconfig.json file?
 ✅️ Would you like to enable the commit lint?
 ✅️ Would you like to enable the prettier?
-👍🏻 Which one do you want to use as the default change detection strategy?
+👍 Which one do you want to use as the default change detection strategy?
 ❯  OnPush
    Default
 ```

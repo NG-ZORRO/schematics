@@ -13,7 +13,7 @@ import {
 } from '@angular-devkit/schematics';
 
 import { Schema as SchematicOptions } from './schema';
-import { JsonObject, strings } from '@angular-devkit/core';
+import { JsonObject, JsonParseMode, parseJson, strings } from '@angular-devkit/core';
 import { addPackageToPackageJson } from '../utils/package-config';
 import { experimental } from '@angular-devkit/core';
 import { getWorkspace, getWorkspacePath } from '@schematics/angular/utility/config';
@@ -88,7 +88,7 @@ function addPackage(host: Tree, context: SchematicContext, options: SchematicOpt
 function replacePackageJsonScript(host: Tree) {
   if (host.exists('package.json')) {
     const sourceText = host.read('package.json')!.toString('utf-8');
-    const json = JSON.parse(sourceText);
+    const json = parseJson(sourceText, JsonParseMode.Loose);
 
     if (!json.scripts) {
       json.scripts = {};
@@ -105,7 +105,7 @@ function replacePackageJsonScript(host: Tree) {
 function addGitHookToPackageJson(host: Tree, context: SchematicContext, options: SchematicOptions) {
   if (host.exists('package.json')) {
     const sourceText = host.read('package.json')!.toString('utf-8');
-    const json = JSON.parse(sourceText);
+    const json = parseJson(sourceText, JsonParseMode.Loose);
 
     if (!json['lint-staged']) {
       json['lint-staged'] = {};
@@ -153,7 +153,7 @@ function setPathMapping(host: Tree, context: SchematicContext, options: Schemati
 
   if (host.exists('tsconfig.json')) {
     const sourceText = host.read('tsconfig.json')!.toString('utf-8');
-    const json = JSON.parse(sourceText);
+    const json = parseJson(sourceText, JsonParseMode.Loose);
 
     if (!json.compilerOptions) {
       json.compilerOptions = {};
